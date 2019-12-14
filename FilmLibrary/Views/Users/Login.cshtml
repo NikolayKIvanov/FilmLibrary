@@ -1,0 +1,49 @@
+﻿@model FilmLibrary.Dtos.UserForLogInDto
+@{
+    ViewData["Title"] = "Login";
+}
+
+<link href="~/css/userForms.css" rel="stylesheet">
+
+<form class="col-4" asp-action="Login" id="loginId">
+    <h2 class="text-center mb-3">Sign In</h2>
+    <label>
+        <p class="label-txt">ENTER YOUR EMAIL</p>
+        <input asp-for="Email" class="input">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+        <span asp-validation-for="Email" class="text-danger row mx-2"></span>
+    </label>
+    <label>
+        <p class="label-txt">ENTER YOUR PASSWORD</p>
+        <input asp-for="Password" class="input">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+        <span asp-validation-for="Password" class="text-danger row mx-2"></span>
+    </label>
+    @if (!Model.AreCredentialsCorrect)
+    {
+        <div class="form-group">
+            <span class="text-danger">Invalid email or password!</span>
+        </div>
+    }
+    <div class="d-flex flex-row mt-3">
+        <div>
+            <a asp-action="Register">Don't have an account? Sign up</a>
+        </div>
+    </div>
+    <div class="d-flex flex-row-reverse mt-3">
+        <div>
+            <button type="submit">login</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="js/authScript.js"></script>
+
+

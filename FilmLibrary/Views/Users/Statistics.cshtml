@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Statistics";
+}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
+<div id="btnGroupId" class="grid col-lg-3">
+    <p class="labelName">Select Type:</p>
+    <div class="row">
+        <div class="btn-group btn-group-toggle col-12" data-toggle="buttons" id="typeGroupId">
+            <label class="btn btn-danger active col-4">
+                <input type="radio" name="type" id="type1" autocomplete="off" onchange="getTop()" value="Genres" checked> Genre
+            </label>
+            <label class="btn btn-danger col-4">
+                <input type="radio" name="type" id="type2" autocomplete="off" onchange="getTop()" value="Actors"> Actor
+            </label>
+            <label class="btn btn-danger col-4">
+                <input type="radio" name="type" id="type3" autocomplete="off" onchange="getTop()" value="Productions"> Studio
+            </label>
+        </div>
+    </div>
+
+    <p class="labelName">Select Category:</p>
+    <div class="row">
+        <div class="btn-group btn-group-toggle col-12" data-toggle="buttons" id="categoryGroupId">
+            <label class="btn btn-primary active col-4">
+                <input type="radio" name="category" id="option1" autocomplete="off" onchange="getTop()" value="Watchlist" checked> Watchlist
+            </label>
+            <label class="btn btn-primary col-4">
+                <input type="radio" name="category" id="option2" autocomplete="off" onchange="getTop()" value="Favorites"> Favorites
+            </label>
+            <label class="btn btn-primary col-4">
+                <input type="radio" name="category" id="option3" autocomplete="off" onchange="getTop()" value="Watched"> Watched
+            </label>
+        </div>
+    </div>
+
+    <p class="labelName">Select View:</p>
+    <div class="row">
+        <div class="btn-group btn-group-toggle col-12" data-toggle="buttons" id="chartGroupId">
+            <label class="btn btn-success active col-4">
+                <input type="radio" name="chartType" autocomplete="off" onchange="buildChart(chartData, 'pie')" value="pie" checked> Pie Chart
+            </label>
+            <label class="btn btn-success col-4">
+                <input type="radio" name="chartType" autocomplete="off" onchange="buildChart(chartData, 'bar')" value="bar"> Bar Chart
+            </label>
+            <label class="btn btn-success col-4">
+                <input type="radio" name="chartType" autocomplete="off" onchange="buildChart(chartData, 'polarArea')" value="polarArea"> Polar Chart
+            </label>
+        </div>
+    </div>
+
+    <p class="labelName">See most common <i id="typeId"></i> in all categories:</p>
+    <div class="row">
+        <div class="btn-group btn-group-toggle col-12" data-toggle="buttons" id="radarGroupId">
+            <label class="btn btn-info col-4">
+                <input type="radio" name="chartType" id="radarId" autocomplete="off" onchange="buildRadarChart()" value="radar"> Radar Chart
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 col-4 d-flex justify-content-center mb-4">
+    <h2 class="text-center" id="statisticsId">Statistics</h2>
+</div>
+<div class="container mt-5 col-4 d-flex justify-content-center">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
+<script src="~/js/buildCharts.js"></script>

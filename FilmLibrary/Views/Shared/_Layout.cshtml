@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+@using System.Threading;
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <environment include="Development">
+        <link href="~/lib/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
+        <link href="~/lib/fontawesome-free-5.10.2-web/css/all.min.css" rel="stylesheet" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </environment>
+</head>
+<body>
+    <nav class="navbar fixed-top bg-dark d-flex justify-content-between">
+        <div>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link navbar-brand" asp-controller="Home" asp-action="Index">
+                        <img class="d-inline" src="~/images/logo1.png" height="40" />
+                        <p class="d-inline">FilmLibrary</p>
+                    </a>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item"><a class="nav-link link" style="height: 100%" asp-controller="Movies" asp-action="Watchlist">Watchlist</a></li>
+                    <li class="nav-item"><a class="nav-link link" style="height: 100%" asp-controller="Movies" asp-action="Favorites">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link link" style="height: 100%" asp-controller="Movies" asp-action="History">History</a></li>
+                }
+            </ul>
+        </div>
+
+        <div class="col-4 d-flex justify-content-end">
+            <form autocomplete="off" asp-action="Search" asp-controller="Movies" class="form-inline row col-10" id="searchFormId">
+                <input id="searchFieldId" list="foundMovies" type="search" class="form-control col-10" name="SearchText" placeholder="Search by title..." onkeyup="searchTitleInDatabase()" />
+                <button class="btn btn-info" type="submit" id="searchBtnId"><i class="fa fa-search"></i></button>
+                <div id="foundMovies" class="col-10"></div>
+            </form>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="nav col-4 d-flex justify-content-end">
+                    <div class="dropdown">
+                        <button class="nav-link btn btn-link dropdown-toggle link" type="button" data-toggle="dropdown">
+                            Hello @User.Identity.Name
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Users" asp-action="Edit">Edit profile</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Statistics" asp-action="Statistics">Statistics</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </ul>
+            }
+            else
+            {
+                <ul class="nav col-4 d-flex justify-content-end">
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Users" asp-action="Login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Users" asp-action="Register">Register</a></li>
+                </ul>
+            }
+        </div>
+    </nav>
+
+    <div class="container body-content col-lg-12" id="mainContainer">
+        @RenderBody()
+    </div>
+
+    <environment include="Development">
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+        <script src="~/lib/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+    @*<script src="./js/globalSearch.js"></script>*@
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

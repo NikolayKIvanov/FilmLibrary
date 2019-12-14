@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Watchlist";
+}
+
+<div class="col-12 mb-3 pt-3 d-flex justify-content-center">
+    <form class="input-group my-group col-6" method="get">
+        <input id="searchByCategoryFieldId" type="text" class="form-control" name="searchText" placeholder="Search in watchlist..." onkeyup="search()"/>
+        <select id="lunch" class="selectpicker form-control col-3" data-live-search="true" title="Please select a category">
+            <option>&#xf008; Title</option>
+            <option>&#xf007;&nbsp; Director</option>
+            <option>&#xf03e; Genre</option>
+        </select>
+        <span class="input-group-btn">
+            <button class="btn btn-info my-group-button" type="button" id="searchBtnId"><i class="fa fa-search"></i></button>
+        </span>
+    </form>
+</div>
+
+<script type="text/javascript" src="~/js/buildCategoryPages.js"></script>
+<script type="text/javascript" src="~/js/globalSearch.js"></script>
+
+

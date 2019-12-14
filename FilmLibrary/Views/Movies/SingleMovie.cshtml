@@ -1,0 +1,82 @@
+﻿@using System.Security.Claims
+@model FilmLibrary.Dtos.SingleMovieViewModel
+@{
+    ViewData["Title"] = "SingleMovie";
+}
+
+<div class="container">
+    <h2 class="text-center mt-3 mb-5">Movie Information</h2>
+    <div class="row">
+        <div>
+            <img src="@Url.Content($"~/images/{Model.MovieLong.Poster}")" alt="@Model.MovieLong.Title" width="350" onerror="this.onerror = null;this.src = '/images/no+poster+available.jpg'">
+        </div>
+        <div class="col">
+            <div>
+                <h5>Title: @Model.MovieLong.Title</h5>
+            </div>
+            <div>
+                <p>Director: @Model.MovieLong.Director</p>
+            </div>
+            <div>
+                <p>Production: @Model.MovieLong.Production</p>
+            </div>
+            <div>
+                <p>Actors: @Model.MovieLong.Actors</p>
+            </div>
+            <div>
+                <p>Genre: @Model.MovieLong.Genre</p>
+            </div>
+            <div>
+                <p>Released Date: @Model.MovieLong.Released</p>
+            </div>
+            <div>
+                <p>IMDB Rating: @Model.MovieLong.Rating</p>
+            </div>
+            <div>
+                <p>Plot: @Model.MovieLong.Plot</p>
+            </div>
+        </div>
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+    <div class="d-flex justify-content-between mt-3">
+        @if (Model.IsInWatched && !Model.IsInWatchlist && !Model.IsInFavorites)
+        {
+            <a class="btn btn-info col-3" asp-action="RemoveMovieFromUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watched">Remove From Watched</a>
+            <a class="btn btn-warning disabled col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watchlist">Add To Watchlist</a>
+            <a class="btn btn-danger col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Favorites">Add To Favorites</a>
+        }
+        else if (!Model.IsInWatched && !Model.IsInWatchlist && !Model.IsInFavorites)
+        {
+            <a class="btn btn-info col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watched">Add To Watched</a>
+            <a class="btn btn-warning col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watchlist">Add To Watchlist</a>
+            <a class="btn btn-danger disabled col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Favorites">Add To Favorites</a>
+        }
+        else if (!Model.IsInWatched && Model.IsInWatchlist && !Model.IsInFavorites)
+        {
+            <a class="btn btn-info col-3" asp-action="AddToWatchedRemoveFromUserWatchlist" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watched">Add To Watched</a>
+            <a class="btn btn-warning col-3" asp-action="RemoveMovieFromUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watchlist">Remove From Watchlist</a>
+            <a class="btn btn-danger disabled col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Favorites">Add To Favorites</a>
+        }
+        else if (Model.IsInWatched && !Model.IsInWatchlist && Model.IsInFavorites)
+        {
+            <a class="btn btn-info col-3" asp-action="RemoveMovieFromUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watched">Remove From Watched</a>
+            <a class="btn btn-warning disabled col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watchlist">Add To Watchlist</a>
+            <a class="btn btn-danger col-3" asp-action="RemoveMovieFromUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Favorites">Remove From Favorites</a>
+        }
+        else if (Model.IsInWatched && Model.IsInWatchlist && !Model.IsInFavorites)
+        {
+            <a class="btn btn-info col-3" asp-action="RemoveMovieFromUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watched">Remove From Watched</a>
+            <a class="btn btn-warning disabled col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watchlist">Add To Watchlist</a>
+            <a class="btn btn-danger col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Favorites">Add To Favorites</a>
+        }
+        else if (Model.IsInWatched && Model.IsInWatchlist && Model.IsInFavorites)
+        {
+            <a class="btn btn-info col-3" asp-action="RemoveMovieFromUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watched">Remove From Watched</a>
+            <a class="btn btn-warning disabled col-3" asp-action="LinkMovieToUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Watchlist">Add To Watchlist</a>
+            <a class="btn btn-danger col-3" asp-action="RemoveMovieFromUser" asp-controller="Movies" asp-route-movieId="@Model.MovieLong.Id" asp-route-category="Favorites">Remove From Favorites</a>
+        }
+    </div>
+    }
+</div>

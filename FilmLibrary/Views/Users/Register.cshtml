@@ -1,0 +1,66 @@
+﻿@model FilmLibrary.Dtos.UserForRegisterDto
+
+@{
+    ViewData["Title"] = "Registration";
+}
+<link href="~/css/userForms.css" rel="stylesheet">
+
+<form class="col-4" asp-action="Register" id="registerId">
+    <h2 class="text-center">Sign up</h2>
+    <div asp-validation-summary="ModelOnly" class="text-danger row mx-2"></div>
+    <label>
+        <p class="label-txt">ENTER FIRST NAME</p>
+        <input asp-for="FirstName" class="input">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+    </label>
+    <span asp-validation-for="FirstName" class="text-danger row mx-2"></span>
+    <label>
+        <p class="label-txt">ENTER LAST NAME</p>
+        <input asp-for="LastName" class="input">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+    </label>
+    <span asp-validation-for="FirstName" class="text-danger row mx-2"></span>
+    <label>
+        <p class="label-txt">ENTER EMAIL</p>
+        <input asp-for="Email" class="input">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+    </label>
+    <span asp-validation-for="Email" class="text-danger row mx-2"></span>
+    <div>
+        @if (Model.IsEmailTaken)
+        {
+            <p class="text-danger">Email already taken.</p>
+        }
+    </div>
+    <label>
+        <p class="label-txt">ENTER PASSWORD</p>
+        <input asp-for="Password" class="input">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+    </label>
+    <span asp-validation-for="Password" class="text-danger row mx-2"></span>
+    <label>
+        <p class="label-txt">CONFIRM PASSWORD</p>
+        <input asp-for="RepeatedPassword" class="input">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+    </label>
+    <span asp-validation-for="RepeatedPassword" class="text-danger row mx-2"></span>
+    <div class="d-flex justify-content-end">
+        <button type="submit" class=" mt-3">register</button>
+    </div>
+</form>
+
+<script src="js/authScript.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
