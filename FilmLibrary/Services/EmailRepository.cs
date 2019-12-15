@@ -34,9 +34,9 @@ namespace FilmLibrary.Services
      
             var email = new EmailForm()
             {
-                Title = $"{_httpContext.User.Identity.Name} suggested you this movie {movie.Title}!",
+                Title = $"{_httpContext.User.Identity.Name} recommended the movie {movie.Title}!",
                 EmailTo = to,
-                Body = $"Check it out here {url} !"
+                Body = $"Check it out <a href={url}>HERE</a> !"
             };
 
             var content = JsonConvert.SerializeObject(email);
