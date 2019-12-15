@@ -663,7 +663,7 @@ namespace FilmLibrary.Services
         /// </summary>
         /// <param name="movieId"></param>
         /// <returns>Returns the movie from database.</returns>
-        private async Task<Movie> GetMovieById(Guid movieId)
+        public async Task<Movie> GetMovieById(Guid movieId)
         {
             return await _dataContext.Movies.SingleOrDefaultAsync(m => m.Id == movieId);
         }

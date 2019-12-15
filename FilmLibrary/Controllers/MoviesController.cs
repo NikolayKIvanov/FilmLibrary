@@ -15,16 +15,18 @@ namespace FilmLibrary.Controllers
     {
         private readonly IMoviesRepository _repository;
         private readonly IUserRepository _userRepository;
+        private readonly IEmailRepository _emailRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MoviesRepository"/>
         /// </summary>
         /// <param name="repository"></param>
         /// <param name="userRepository"></param>
-        public MoviesController(IMoviesRepository repository, IUserRepository userRepository)
+        public MoviesController(IMoviesRepository repository, IUserRepository userRepository, IEmailRepository emailRepository)
         {
             _repository = repository;
             _userRepository = userRepository;
+            _emailRepository = emailRepository;
         }
 
         /// <summary>
@@ -184,6 +186,14 @@ namespace FilmLibrary.Controllers
         {
             var movies = await _repository.GetMoviesByCategory(_userRepository.GetUserId(this.User), category, pageNumber, moviesOnPage);
             return Json(movies);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ShareMovie([FromBody]EmailSubmissionModel model)
+        {
+            await _emailRepository.ShareMovie(model.MovieId, model.EmailTo);
+
+            return Json(new { });
         }
     }
 }

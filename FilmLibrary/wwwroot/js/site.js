@@ -35,7 +35,6 @@ $("#rightArrow").click(function () {
             "\r\n<span class=\"sr-only\">Loading...</span>\r\n</div>" +
             "</div>");
 });
-
 function searchTitleInDatabase() {
     var searchText = document.getElementById("searchFieldId").value;
 

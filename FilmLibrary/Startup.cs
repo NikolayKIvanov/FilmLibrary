@@ -45,6 +45,9 @@ namespace FilmLibrary
             services.AddTransient<IMoviesRepository, MoviesRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
 
+            services.AddHttpContextAccessor();
+            services.AddTransient<IEmailRepository, EmailRepository>();
+
             var connection = Configuration.GetSection("ConnectionString").Value;
 
             services.AddDbContext<DataContext>

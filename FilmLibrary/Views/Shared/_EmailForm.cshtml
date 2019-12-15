@@ -1,0 +1,93 @@
+﻿@model EmailSubmissionModel
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Share with a friend</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="email-input-container">
+                    <input id="movieId" hidden asp-for="MovieId" />
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div id="successMsg" class="alert alert-success message-response" role="alert" style="display:none">
+                        Successfully send email !
+                    </div>
+                    <div id="errorMsg" class="alert alert-danger message-response" role="alert" style="display:none">
+                        Something went wrong. Please try again.
+                    </div>
+                    <div id="emailRequiredMsg" class="alert alert-danger message-response" role="alert" style="display:none">
+                        Email is required
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="sendEmail" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+                <div class="text-center" id="spinner" style="display:none"> <div class="spinner-border" role="status"></div></div>
+             
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $('#sendEmail').click(function () {
+
+        if (!$('#emailInput').val()) {
+            $('#emailRequiredMsg').show();
+            return;
+      
+        } else {
+             $('#emailRequiredMsg').hide();
+        }
+
+        deleteMessages();
+        var EmailSubmissionModel = {
+            MovieId: $('#movieId').val(),
+            EmailTo: $('#emailInput').val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "/Movies/ShareMovie",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(EmailSubmissionModel),
+            beforeSend: function (e) {
+                $('#spinner').show();
+                $('#email-input-container').hide();
+
+            },
+            success: function (data) {
+                $('#successMsg').show();
+
+                $('#spinner').hide();
+                $('#email-input-container').show();
+            },
+            error: function (e) {
+                console.log('in e')
+                $('#errorMsg').show();
+
+                $('#spinner').hide();
+                $('#email-input-container').show();
+            }
+        });
+    })
+
+
+    $('#exampleModalCenter').on('hidden.bs.modal', function () {
+        deleteMessages();
+    });
+    function deleteMessages() {
+        $('.message-response').hide();
+    }
+
+</script>

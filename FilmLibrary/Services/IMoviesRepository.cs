@@ -8,6 +8,8 @@ public interface IMoviesRepository
 {
     Task<SingleMovieViewModel> GetMovieByImdbId(string imdbId);
 
+    Task<Movie> GetMovieById(Guid id);
+
     Task<SingleMovieViewModel> GetMovieByImdbIdForUser(Guid userId, string imdbId);
 
     Task<MoviesByCategoryModel> GetMoviesByDirector(Guid userId, string directorName, string category);
